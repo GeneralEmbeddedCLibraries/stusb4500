@@ -296,6 +296,17 @@ static stusb4500_status_t stusb4500_reinit(void)
 }
 
 
+//////////////////////////////////////////////////////////////
+/*
+*			STUSB4500 handler
+*
+*		Here status of device is refreshed and re-negotiated
+*		with power source device at cable plug-in.
+*
+*	param:		none
+*	return:		status 		- Status of operation
+*/
+//////////////////////////////////////////////////////////////
 stusb4500_status_t stusb4500_hndl(void)
 {
 	stusb4500_status_t status = eSTUSB4500_OK;
