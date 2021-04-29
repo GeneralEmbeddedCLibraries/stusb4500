@@ -20,7 +20,7 @@
 #include "stusb4500_low_if.h"
 #include "../../stusb4500_cfg.h"
 
-#include "i2c.h"
+#include "drivers/peripheral/i2c/i2c.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
