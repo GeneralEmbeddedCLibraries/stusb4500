@@ -19,8 +19,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Includes
 ////////////////////////////////////////////////////////////////////////////////
-#include "stdint.h"
-#include "stm32f7xx_hal.h"
+#include <stdint.h>
+#include "project_config.h"
+#include "stusb4500/src/stusb4500_regdef.h"
 
 // Debug communication port
 #include "middleware/debug_comm_port/com_dbg.h"
@@ -32,18 +33,10 @@
 // Enable debug mode (0/1)
 #define STUSB4500_DEBUG_EN				( 1 )
 
-
-// **********************************************************
-// 	I2C INTERFACE
-// **********************************************************
-// TODO: I2C interface should be provided in low level ->
-//	should be configurable via config file
-
-
-// **********************************************************
-// 	GPIO PINS
-// **********************************************************
-// TODO: Jet to be implemented
+/**
+ * 	Device address
+ */
+#define STUSB4500_DEV_ADDR				( eSTUSB4500_I2C_ADDR_0 )
 
 
 // **********************************************************
@@ -68,7 +61,7 @@
 // **********************************************************
 #if ( STUSB4500_DEBUG_EN )
 	#define STUSB4500_DBG_PRINT( ... )					( com_dbg_print( eCOM_DBG_CH_ERR, (const char*) __VA_ARGS__ ))
-	#define STUSB4500_ASSERT(x)							if ( 0 == x ) { STUSB4500_DBG_PRINT("ASSERT ERROR! file: %s, line: %d", __FILE__, __LINE__ ); while(1){} }
+	#define STUSB4500_ASSERT(x)							PROJECT_CONFIG_ASSERT(x) //if ( 0 == x ) { STUSB4500_DBG_PRINT("ASSERT ERROR! file: %s, line: %d", __FILE__, __LINE__ ); while(1){} }
 #else
 	#define STUSB4500_DBG_PRINT( ... )					{ ; }
 	#define STUSB4500_ASSERT(x)							{ ; }

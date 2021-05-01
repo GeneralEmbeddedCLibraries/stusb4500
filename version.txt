@@ -1,8 +1,9 @@
 //============================================================
-// Version 1.0.0 (xx.xx.2021)
+// Version 1.0.0 (01.05.2021)
 //============================================================
 // - Initial implementation of STUSB4500 driver
 // 
 //  Features:
-//   -  
+//   - PDO1 fixed 5V
+//   - Voltage/Current configurable PDO2 & PDO3 via config file
 //============================================================

@@ -19,11 +19,12 @@
 // Includes
 ////////////////////////////////////////////////////////////////////////////////
 #include "stm32f7xx_hal.h"
-#include "string.h"
+#include <string.h>
 
 #include "stusb4500.h"
-#include "../../stusb4500_cfg.h"
 #include "stusb4500_low_if.h"
+#include "../../stusb4500_cfg.h"
+#include "../../stusb4500_if.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -40,7 +41,6 @@
 
 // Convert voltage raw to physical
 #define STUSB4500_CONVERT_CURRENT_TO_A				((float32_t) ( 0.01 )) 			// [ A / quant ]
-
 
 // Raw PDO
 typedef union
@@ -186,10 +186,7 @@ stusb4500_status_t stusb4500_init(void)
 
 	if ( false == gb_is_init )
 	{
-		// Low level init
-		// TODO: Here check if I2C is init...
-
-		if ( eSTUSB4500_OK != stusb4500_low_if_init())
+		if ( eSTUSB4500_OK != stusb4500_if_init())
 		{
 			status = eSTUSB4500_ERROR;
 		}
