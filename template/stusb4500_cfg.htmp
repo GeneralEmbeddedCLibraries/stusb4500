@@ -1,0 +1,71 @@
+////////////////////////////////////////////////////////////////////////////////
+/**
+*@file      stusb4500_cfg.h
+*@brief     Configuration for USBC PD chipset
+*@author    Ziga Miklosic
+*@date      29.04.2021
+*@version	V1.0.0
+*/
+////////////////////////////////////////////////////////////////////////////////
+/**
+*@addtogroup STUSB4500_CFG
+* @{ <!-- BEGIN GROUP -->
+*/
+////////////////////////////////////////////////////////////////////////////////
+
+#ifndef _STUSB4500_CFG_H_
+#define _STUSB4500_CFG_H_
+
+////////////////////////////////////////////////////////////////////////////////
+// Includes
+////////////////////////////////////////////////////////////////////////////////
+#include <stdint.h>
+#include "project_config.h"
+#include "stusb4500/src/stusb4500_regdef.h"
+
+// Debug communication port
+#include "middleware/debug_comm_port/com_dbg.h"
+
+////////////////////////////////////////////////////////////////////////////////
+// Definitions
+////////////////////////////////////////////////////////////////////////////////
+
+// Enable debug mode (0/1)
+#define STUSB4500_DEBUG_EN				( 1 )
+
+/**
+ * 	Device address
+ */
+#define STUSB4500_DEV_ADDR				( eSTUSB4500_I2C_ADDR_0 )
+
+
+// **********************************************************
+// 	PDO DEFINITIONS
+// **********************************************************
+
+// Negotiate only 5V
+// NOTE: This chooses always PDO1, PDO2 & PDO3 not used in that case
+#define STUSB4500_NEGOTIATE_ONLY_5V_EN	( 0 )
+
+// PDO2
+#define STUSB4500_PDO_2_VOLTAGE_V		( 9.0f )	// [V]
+#define STUSB4500_PDO_2_CURRENT_A		( 0.5f )	// [A]
+
+// PDO3
+#define STUSB4500_PDO_3_VOLTAGE_V		( 12.0 )	// [V]
+#define STUSB4500_PDO_3_CURRENT_A		( 1.0f )	// [A]
+
+
+// **********************************************************
+// 	DEBUG COM PORT
+// **********************************************************
+#if ( STUSB4500_DEBUG_EN )
+	#define STUSB4500_DBG_PRINT( ... )					( com_dbg_print( eCOM_DBG_CH_ERR, (const char*) __VA_ARGS__ ))
+	#define STUSB4500_ASSERT(x)							PROJECT_CONFIG_ASSERT(x)
+#else
+	#define STUSB4500_DBG_PRINT( ... )					{ ; }
+	#define STUSB4500_ASSERT(x)							{ ; }
+#endif
+
+
+#endif // _STUSB4500_CFG_H_

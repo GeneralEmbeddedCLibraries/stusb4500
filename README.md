@@ -2,7 +2,7 @@
 USBC Power Delivery controller C library. Driver was tested on STM32. 
 
 - STUSB4500 power delivery sink controller support up to 3 PDO
-- User should define desire PDO2 & PDO3 in **stusb4500_config.h** file
+- User should define desire PDO2 & PDO3 in **stusb4500_cfg.h** file
 - NOTE: PDO1 is fixed to 5V
 
 ## Example of usage
