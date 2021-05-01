@@ -10,6 +10,8 @@
 /**
 *@addtogroup STUSB4500_API
 * @{ <!-- BEGIN GROUP -->
+*
+* 	API functions
 */
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -232,6 +234,81 @@ stusb4500_status_t stusb4500_init(void)
 
 ////////////////////////////////////////////////////////////////////////////////
 /**
+*			STUSB4500 handler
+*
+*		Here status of device is refreshed and re-negotiated
+*		with power source device at cable plug-in.
+*
+* @return 		status 		- Status of operation
+*/
+////////////////////////////////////////////////////////////////////////////////
+stusb4500_status_t stusb4500_hndl(void)
+{
+			stusb4500_status_t status 			= eSTUSB4500_OK;
+	static 	stusb4500_attach_t attached_prev 	= eSTUSB4500_NOT_ATTACHED;
+
+	// Refresh status
+	status = stusb4500_refresh_status();
+
+	// Reinitialize after plug in cable
+	if ( eSTUSB4500_OK == status )
+	{
+		if 	( 	( eSTUSB4500_ATTACHED == g_stusb4500_status.attached )
+			&& 	( eSTUSB4500_NOT_ATTACHED == attached_prev ))
+		{
+			stusb4500_reinit();
+		}
+
+		// Store previous
+		attached_prev = g_stusb4500_status.attached;
+	}
+
+	return status;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+*		Get status of device
+*
+* @return 		p_status - Pointer to status data
+*/
+////////////////////////////////////////////////////////////////////////////////
+const stusb4500_usb_status_t * stusb4500_get_status(void)
+{
+	stusb4500_usb_status_t * p_status = NULL;
+
+	if ( true == gb_is_init )
+	{
+		p_status = &g_stusb4500_status;
+	}
+	else
+	{
+		p_status = NULL;
+
+		STUSB4500_DBG_PRINT( "Module not initialized!" );
+		STUSB4500_ASSERT( 0 );
+	}
+
+	return (const stusb4500_usb_status_t*) p_status;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+* @} <!-- END GROUP -->
+*/
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+*@addtogroup STUSB4500
+* @{ <!-- BEGIN GROUP -->
+*
+* 	Kernel functions of STUSB4500.
+*/
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+/**
 *			Re-Initialization of STUSB4500
 *
 *		This function is used in case if PD source device is not
@@ -285,39 +362,7 @@ static stusb4500_status_t stusb4500_reinit(void)
 	return status;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-/**
-*			STUSB4500 handler
-*
-*		Here status of device is refreshed and re-negotiated
-*		with power source device at cable plug-in.
-*
-* @return 		status 		- Status of operation
-*/
-////////////////////////////////////////////////////////////////////////////////
-stusb4500_status_t stusb4500_hndl(void)
-{
-			stusb4500_status_t status 			= eSTUSB4500_OK;
-	static 	stusb4500_attach_t attached_prev 	= eSTUSB4500_NOT_ATTACHED;
 
-	// Refresh status
-	status = stusb4500_refresh_status();
-
-	// Reinitialize after plug in cable
-	if ( eSTUSB4500_OK == status )
-	{
-		if 	( 	( eSTUSB4500_ATTACHED == g_stusb4500_status.attached )
-			&& 	( eSTUSB4500_NOT_ATTACHED == attached_prev ))
-		{
-			stusb4500_reinit();
-		}
-
-		// Store previous
-		attached_prev = g_stusb4500_status.attached;
-	}
-
-	return status;
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 /**
@@ -327,7 +372,7 @@ stusb4500_status_t stusb4500_hndl(void)
 * @return 		status 		- Status of operation
 */
 ////////////////////////////////////////////////////////////////////////////////
-stusb4500_status_t stusb4500_read_device_id	(uint8_t * const p_id)
+static stusb4500_status_t stusb4500_read_device_id(uint8_t * const p_id)
 {
 	stusb4500_status_t status = eSTUSB4500_OK;
 
@@ -557,32 +602,6 @@ static void stusb4500_parse_raw_pdo_frame(stusb4500_pdo_t * const p_pdo, const s
 	p_pdo -> flags.high_capability		= p_pdo_raw -> B.high_capability;
 
 	p_pdo -> fast_role_swap 			= p_pdo_raw -> B.fast_role;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-/**
-*		Get status of device
-*
-* @return 		p_status - Pointer to status data
-*/
-////////////////////////////////////////////////////////////////////////////////
-const stusb4500_usb_status_t * stusb4500_get_status(void)
-{
-	stusb4500_usb_status_t * p_status = NULL;
-
-	if ( true == gb_is_init )
-	{
-		p_status = &g_stusb4500_status;
-	}
-	else
-	{
-		p_status = NULL;
-
-		STUSB4500_DBG_PRINT( "Module not initialized!" );
-		STUSB4500_ASSERT( 0 );
-	}
-
-	return (const stusb4500_usb_status_t*) p_status;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

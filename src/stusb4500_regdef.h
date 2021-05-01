@@ -10,6 +10,8 @@
 /**
 *@addtogroup STUSB4500_REGEDEF
 * @{ <!-- BEGIN GROUP -->
+*
+* 	Register definitions of STUSB4500.
 */
 ////////////////////////////////////////////////////////////////////////////////
 
