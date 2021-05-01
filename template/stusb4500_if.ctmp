@@ -47,7 +47,6 @@
 // Functions
 ////////////////////////////////////////////////////////////////////////////////
 
-
 ////////////////////////////////////////////////////////////////////////////////
 /**
 *		Initialize low level interface
@@ -88,7 +87,7 @@ stusb4500_status_t stusb4500_if_write_register(const uint8_t addr, const uint8_t
 
 	// USER CODE BEGIN...
 
-	if ( eI2C_OK != i2c_write( STUSB4500_DEV_ADDR, addr, (uint8_t*)p_tx_data, size ))
+	if ( eI2C_OK != i2c_usbc_write( STUSB4500_DEV_ADDR, addr, (uint8_t*)p_tx_data, size ))
 	{
 		status = eSTUSB4500_ERROR;
 	}
@@ -116,7 +115,7 @@ stusb4500_status_t stusb4500_if_read_register(const uint8_t addr, uint8_t * p_rx
 
 	// USER CODE BEGIN...
 
-	if ( eI2C_OK != i2c_read( STUSB4500_DEV_ADDR, addr, p_rx_data, size ))
+	if ( eI2C_OK != i2c_usbc_read( STUSB4500_DEV_ADDR, addr, p_rx_data, size ))
 	{
 		status = eSTUSB4500_ERROR;
 	}

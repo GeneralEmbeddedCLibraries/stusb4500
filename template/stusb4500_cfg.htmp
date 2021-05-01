@@ -61,7 +61,7 @@
 // **********************************************************
 #if ( STUSB4500_DEBUG_EN )
 	#define STUSB4500_DBG_PRINT( ... )					( com_dbg_print( eCOM_DBG_CH_ERR, (const char*) __VA_ARGS__ ))
-	#define STUSB4500_ASSERT(x)							PROJECT_CONFIG_ASSERT(x) //if ( 0 == x ) { STUSB4500_DBG_PRINT("ASSERT ERROR! file: %s, line: %d", __FILE__, __LINE__ ); while(1){} }
+	#define STUSB4500_ASSERT(x)							PROJECT_CONFIG_ASSERT(x)
 #else
 	#define STUSB4500_DBG_PRINT( ... )					{ ; }
 	#define STUSB4500_ASSERT(x)							{ ; }

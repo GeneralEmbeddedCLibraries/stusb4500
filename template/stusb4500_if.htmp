@@ -10,6 +10,9 @@
 /**
 *@addtogroup STUSB4500_IF
 * @{ <!-- BEGIN GROUP -->
+*
+*
+* 	@note User shall not change this file at all!
 */
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -22,7 +25,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "stusb4500/src/stusb4500.h"
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
