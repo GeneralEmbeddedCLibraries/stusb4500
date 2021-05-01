@@ -159,5 +159,4 @@ stusb4500_status_t 				stusb4500_init			(void);
 stusb4500_status_t				stusb4500_hndl			(void);
 const stusb4500_usb_status_t * 	stusb4500_get_status	(void);
 
-
 #endif // _STUSB4500_H_

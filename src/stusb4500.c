@@ -13,12 +13,9 @@
 */
 ////////////////////////////////////////////////////////////////////////////////
 
-// TODO: 	1. check gpio alarms/attach, power1/2 status
-
 ////////////////////////////////////////////////////////////////////////////////
 // Includes
 ////////////////////////////////////////////////////////////////////////////////
-#include "stm32f7xx_hal.h"
 #include <string.h>
 
 #include "stusb4500.h"
@@ -180,9 +177,9 @@ static void 				stusb4500_parse_raw_rdo_frame		(stusb4500_usb_status_t * const p
 ////////////////////////////////////////////////////////////////////////////////
 stusb4500_status_t stusb4500_init(void)
 {
-	stusb4500_status_t status = eSTUSB4500_OK;
-	stusb4500_pdo_t read_PDO[3];
-	uint8_t i;
+	stusb4500_status_t 	status 		= eSTUSB4500_OK;
+	stusb4500_pdo_t 	read_PDO[3]	= {0};
+	uint8_t 			i			= 0U;
 
 	if ( false == gb_is_init )
 	{
@@ -249,9 +246,9 @@ stusb4500_status_t stusb4500_init(void)
 ////////////////////////////////////////////////////////////////////////////////
 static stusb4500_status_t stusb4500_reinit(void)
 {
-	stusb4500_status_t status = eSTUSB4500_OK;
-	stusb4500_pdo_t read_PDO[3];
-	uint8_t i;
+	stusb4500_status_t 	status 		= eSTUSB4500_OK;
+	stusb4500_pdo_t 	read_PDO[3]	= {0};
+	uint8_t 			i			= 0U;
 
 	// Check if init
 	if ( true == gb_is_init )
@@ -300,8 +297,8 @@ static stusb4500_status_t stusb4500_reinit(void)
 ////////////////////////////////////////////////////////////////////////////////
 stusb4500_status_t stusb4500_hndl(void)
 {
-	stusb4500_status_t status = eSTUSB4500_OK;
-	static stusb4500_attach_t attached_prev = eSTUSB4500_NOT_ATTACHED;
+			stusb4500_status_t status 			= eSTUSB4500_OK;
+	static 	stusb4500_attach_t attached_prev 	= eSTUSB4500_NOT_ATTACHED;
 
 	// Refresh status
 	status = stusb4500_refresh_status();
@@ -358,8 +355,8 @@ stusb4500_status_t stusb4500_read_device_id	(uint8_t * const p_id)
 ////////////////////////////////////////////////////////////////////////////////
 static stusb4500_status_t stusb4500_ping_device(void)
 {
-	stusb4500_status_t status = eSTUSB4500_OK;
-	uint8_t dev_id;
+	stusb4500_status_t 	status 	= eSTUSB4500_OK;
+	uint8_t 			dev_id	= 0U;
 
 	if ( eSTUSB4500_OK == stusb4500_read_device_id( &dev_id ))
 	{
@@ -390,10 +387,10 @@ static stusb4500_status_t stusb4500_ping_device(void)
 ////////////////////////////////////////////////////////////////////////////////
 static stusb4500_status_t stusb4500_clear_interrupts(void)
 {
-	stusb4500_status_t status = eSTUSB4500_OK;
-	uint8_t dummy[10];
+	stusb4500_status_t 	status 		= eSTUSB4500_OK;
+	uint8_t 			dummy[10]	= {0};
 
-	status |= stusb4500_low_if_read_register( eSTUSB4500_ADDR_PORT_STATUS_0, (uint8_t*) &dummy, 10UL );
+	status = stusb4500_low_if_read_register( eSTUSB4500_ADDR_PORT_STATUS_0, (uint8_t*) &dummy, 10UL );
 
 	return status;
 }
@@ -407,11 +404,10 @@ static stusb4500_status_t stusb4500_clear_interrupts(void)
 ////////////////////////////////////////////////////////////////////////////////
 static stusb4500_status_t stusb4500_set_interrupt_mask(void)
 {
-	stusb4500_status_t status = eSTUSB4500_OK;
-	stusb4500_ALERT_STATUS_1_MASK_t alert_msk_reg;
+	stusb4500_status_t 				status 			= eSTUSB4500_OK;
+	stusb4500_ALERT_STATUS_1_MASK_t alert_msk_reg 	= { .U = 0U };
 
 	// Unmask alarms
-	alert_msk_reg.U = 0;
 	alert_msk_reg.B.CC_FAULT_STATUS_AL_MASK = 1;
 	alert_msk_reg.B.PORT_STATUS_AL_MASK = 1;
 	alert_msk_reg.B.PRT_STATUS_AL_MASK = 1;
@@ -452,9 +448,9 @@ stusb4500_status_t stusb4500_soft_reset(void)
 ////////////////////////////////////////////////////////////////////////////////
 static stusb4500_status_t stusb4500_read_device_pdo(stusb4500_pdo_t * p_pdo)
 {
-	stusb4500_status_t status = eSTUSB4500_OK;
-	stusb4500_pdo_raw_t pdo_raw;
-	uint8_t i;
+	stusb4500_status_t 	status 	= eSTUSB4500_OK;
+	stusb4500_pdo_raw_t pdo_raw	= { .U = 0UL };
+	uint8_t 			i		= 0U;
 
 	for ( i = 0; i < eSTUSB4500_PDO_NUM_OF; i++ )
 	{
@@ -484,9 +480,9 @@ static stusb4500_status_t stusb4500_read_device_pdo(stusb4500_pdo_t * p_pdo)
 ////////////////////////////////////////////////////////////////////////////////
 static stusb4500_status_t stusb4500_write_device_pdo(const stusb4500_pdo_t * p_pdo)
 {
-	stusb4500_status_t status = eSTUSB4500_OK;
-	stusb4500_pdo_raw_t pdo_raw;
-	uint8_t i;
+	stusb4500_status_t 	status 	= eSTUSB4500_OK;
+	stusb4500_pdo_raw_t pdo_raw	= { .U = 0UL };
+	uint8_t				i		= 0U;
 
 	for ( i = 0; i < eSTUSB4500_PDO_NUM_OF; i++ )
 	{
@@ -572,7 +568,7 @@ static void stusb4500_parse_raw_pdo_frame(stusb4500_pdo_t * const p_pdo, const s
 ////////////////////////////////////////////////////////////////////////////////
 const stusb4500_usb_status_t * stusb4500_get_status(void)
 {
-	stusb4500_usb_status_t * p_status;
+	stusb4500_usb_status_t * p_status = NULL;
 
 	if ( true == gb_is_init )
 	{
@@ -598,10 +594,10 @@ const stusb4500_usb_status_t * stusb4500_get_status(void)
 ////////////////////////////////////////////////////////////////////////////////
 static stusb4500_status_t stusb4500_refresh_status(void)
 {
-	stusb4500_status_t status = eSTUSB4500_OK;
-	stusb4500_PORT_STATUS_1_t port_status1;
-	stusb4500_CC_STATUS_t cc_status;
-	stusb4500_rdo_raw_t rdo_raw;
+	stusb4500_status_t 			status 			= eSTUSB4500_OK;
+	stusb4500_PORT_STATUS_1_t 	port_status1	= { .U = 0U };
+	stusb4500_CC_STATUS_t 		cc_status		= { .U = 0U };
+	stusb4500_rdo_raw_t 		rdo_raw			= { .U = 0UL };
 
 	// Check if init
 	if ( true == gb_is_init )
