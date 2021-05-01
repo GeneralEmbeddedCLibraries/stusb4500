@@ -362,8 +362,6 @@ static stusb4500_status_t stusb4500_reinit(void)
 	return status;
 }
 
-
-
 ////////////////////////////////////////////////////////////////////////////////
 /**
 *		Read device ID
@@ -683,4 +681,3 @@ static void stusb4500_parse_raw_rdo_frame(stusb4500_usb_status_t * const p_usb_s
 * @} <!-- END GROUP -->
 */
 ////////////////////////////////////////////////////////////////////////////////
-
