@@ -1,10 +1,13 @@
+// Copyright (c) 2021 Ziga Miklosic
+// All Rights Reserved
+// This software is under MIT licence (https://opensource.org/licenses/MIT)
 ////////////////////////////////////////////////////////////////////////////////
 /**
 *@file      stusb4500_low_if.c
 *@brief     Top level interface with USB PD chipset
 *@author    Ziga Miklosic
 *@date      29.04.2021
-*@version	V1.0.0
+*@version	V1.0.1
 */
 ////////////////////////////////////////////////////////////////////////////////
 /**
