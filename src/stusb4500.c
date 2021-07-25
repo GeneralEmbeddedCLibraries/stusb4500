@@ -1,10 +1,13 @@
+// Copyright (c) 2021 Ziga Miklosic
+// All Rights Reserved
+// This software is under MIT licence (https://opensource.org/licenses/MIT)
 ////////////////////////////////////////////////////////////////////////////////
 /**
 *@file      stusb4500.c
 *@brief     Top level interface with USB PD chipset
 *@author    Ziga Miklosic
 *@date      29.04.2021
-*@version	V1.0.0
+*@version	V1.0.1
 */
 ////////////////////////////////////////////////////////////////////////////////
 /**
@@ -606,7 +609,7 @@ static void stusb4500_parse_raw_pdo_frame(stusb4500_pdo_t * const p_pdo, const s
 /**
 *		Read status from device
 *
-* @return:	status 		- Status of operation
+* @return	status 		- Status of operation
 */
 ////////////////////////////////////////////////////////////////////////////////
 static stusb4500_status_t stusb4500_refresh_status(void)
@@ -644,11 +647,11 @@ static stusb4500_status_t stusb4500_refresh_status(void)
 /**
 *			Parse raw rdo frame
 *
-* @param[in]:		p_usb_status	- Pointer to usb data
-* @param[in]:		p_rdo_raw		- Pointer to raw RDO data
-* @param[in]:		p_port_stat		- Pointer to port status register
-* @param[in]:		p_cc_stat		- Pointer to CC register
-* @return:			status 			- Status of operation
+* @param[in]	p_usb_status	- Pointer to usb data
+* @param[in]	p_rdo_raw		- Pointer to raw RDO data
+* @param[in]	p_port_stat		- Pointer to port status register
+* @param[in]	p_cc_stat		- Pointer to CC register
+* @return		status 			- Status of operation
 */
 ////////////////////////////////////////////////////////////////////////////////
 static void stusb4500_parse_raw_rdo_frame(stusb4500_usb_status_t * const p_usb_status, const stusb4500_rdo_raw_t * const p_rdo_raw, const stusb4500_PORT_STATUS_1_t * const p_port_stat, const stusb4500_CC_STATUS_t * const p_cc_stat)
