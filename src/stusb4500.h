@@ -31,6 +31,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
+ * 	Module version
+ */
+#define STUSB4500_VER_MAJOR			( 1 )
+#define STUSB4500_VER_MINOR			( 0 )
+#define STUSB4500_VER_DEVELOP		( 1 )
+
+/**
  * 	General status
  */
 typedef enum
